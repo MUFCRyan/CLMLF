@@ -7,7 +7,7 @@ charset-normalizer==2.0.6
 clang==5.0
 click==8.0.1
 cycler==0.10.0
-dataclasses @ file:///home/conda/feedstock_root/build_artifacts/dataclasses_1628958435052/work
+# dataclasses @ file:///home/conda/feedstock_root/build_artifacts/dataclasses_1628958435052/work
 filelock==3.2.0
 flatbuffers==1.12
 ftfy==6.0.3
@@ -27,12 +27,12 @@ kiwisolver==1.3.1
 Markdown==3.3.4
 matplotlib==3.3.4
 nltk==3.6.2
-numpy @ file:///home/conda/feedstock_root/build_artifacts/numpy_1626681920064/work
+# numpy @ file:///home/conda/feedstock_root/build_artifacts/numpy_1626681920064/work
 oauthlib==3.1.1
-olefile @ file:///home/conda/feedstock_root/build_artifacts/olefile_1602866521163/work
+# olefile @ file:///home/conda/feedstock_root/build_artifacts/olefile_1602866521163/work
 opt-einsum==3.3.0
 packaging==21.0
-Pillow @ file:///tmp/build/80754af9/pillow_1625670622947/work
+# Pillow @ file:///tmp/build/80754af9/pillow_1625670622947/work
 protobuf==3.18.0
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
@@ -52,7 +52,7 @@ six==1.15.0
 tensorboard==2.6.0
 tensorboard-data-server==0.6.1
 tensorboard-plugin-wit==1.8.0
-tensorflow @ file:///home/zhenli/code/tensorflow-2.6.2-cp36-cp36m-manylinux2010_x86_64.whl
+# tensorflow @ file:///home/zhenli/code/tensorflow-2.6.2-cp36-cp36m-manylinux2010_x86_64.whl
 tensorflow-estimator==2.6.0
 termcolor==1.1.0
 threadpoolctl==2.2.0
