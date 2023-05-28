@@ -110,7 +110,9 @@ if __name__ == '__main__':
 
     cl_fuse_model = model.CLModel(opt)
     if opt.cuda is True:
+        print('ZFC main init torch.cuda.is_available() = {}'.format(torch.cuda.is_available()))
         assert torch.cuda.is_available()
+        print('ZFC main init assert torch.cuda.is_available() = {}'.format(torch.cuda.is_available()))
         if len(opt.gpu_num) > 1:
             if opt.gpu0_bsz > 0:
                 cl_fuse_model = torch.nn.DataParallel(cl_fuse_model).cuda()
