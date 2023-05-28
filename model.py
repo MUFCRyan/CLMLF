@@ -100,6 +100,7 @@ class TextModel(nn.Module):
         super(TextModel, self).__init__()
         abl_path = ''
 
+        # ZFC Text 使用 BERT 中的 TransformerEncoder 来编码
         if opt.text_model == 'bert-base':
             self.config = BertConfig.from_pretrained(abl_path + 'bert-base-uncased/')
             self.model = BertForPreTraining.from_pretrained(abl_path + 'bert-base-uncased/', config=self.config)
@@ -128,6 +129,7 @@ class TextModel(nn.Module):
 class ImageModel(nn.Module):
     def __init__(self, opt):
         super(ImageModel, self).__init__()
+        # ZFC Image 使用 ResNet 编码
         if opt.image_model == 'resnet-152':
             self.resnet = cv_models.resnet152(pretrained=True)
         elif opt.image_model == 'resnet-101':
@@ -140,6 +142,7 @@ class ImageModel(nn.Module):
             self.resnet = cv_models.resnet18(pretrained=True)
         self.resnet_encoder = nn.Sequential(*(list(self.resnet.children())[:-2]))
         self.resnet_avgpool = nn.Sequential(list(self.resnet.children())[-2])
+        # ZFC 用最后一个 Conv 输出的 feature map 作为 feature
         self.output_dim = self.resnet_encoder[7][2].conv3.out_channels
 
         for param in self.resnet.parameters():
@@ -152,7 +155,7 @@ class ImageModel(nn.Module):
         return self.output_dim
 
     def forward(self, images):
-        image_encoder = self.resnet_encoder(images)
+        image_encoder = self.resnet_encoder(images)d
         # image_encoder = self.conv_output(image_encoder)
         image_cls = self.resnet_avgpool(image_encoder)
         image_cls = torch.flatten(image_cls, 1)
@@ -167,6 +170,7 @@ class FuseModel(nn.Module):
         self.zoom_value = math.sqrt(opt.tran_dim)
         self.save_image_index = 0
 
+        # ZFC 分别创建 Text、Image 模型
         self.text_model = TextModel(opt)
         self.image_model = ImageModel(opt)
 
@@ -241,7 +245,7 @@ class FuseModel(nn.Module):
 
         image_mask = text_image_mask[:, -image_init.size(1):]
         extended_attention_mask = get_extended_attention_mask(image_mask, image_init.size())
-
+        # ZFC TE_I
         image_init = self.image_encoder(image_init,
                                              attention_mask=None,
                                              head_mask=None,
@@ -254,10 +258,11 @@ class FuseModel(nn.Module):
                                              return_dict=self.text_config.use_return_dict
                                              )
         image_init = image_init.last_hidden_state
-
+        # ZFC Text、Image拼接
         text_image_cat = torch.cat((text_init, image_init), dim=1)
 
         extended_attention_mask: torch.Tensor = get_extended_attention_mask(text_image_mask, text_inputs.size())
+        # ZFC TE_M
         text_image_transformer = self.text_image_encoder(text_image_cat,
                                                  attention_mask=extended_attention_mask,
                                                  head_mask=None,
