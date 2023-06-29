@@ -155,7 +155,7 @@ class ImageModel(nn.Module):
         return self.output_dim
 
     def forward(self, images):
-        image_encoder = self.resnet_encoder(images)d
+        image_encoder = self.resnet_encoder(images)
         # image_encoder = self.conv_output(image_encoder)
         image_cls = self.resnet_avgpool(image_encoder)
         image_cls = torch.flatten(image_cls, 1)

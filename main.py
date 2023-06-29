@@ -23,6 +23,7 @@ from model import ModelParam
 
 
 if __name__ == '__main__':
+    print('ZFC main init torch.cuda.is_available() = {}'.format(torch.cuda.is_available()))
     parse = argparse.ArgumentParser()
     parse.add_argument('-run_type', type=int,
                        default=1, help='1: train, 2: debug train, 3: dev, 4: test')
